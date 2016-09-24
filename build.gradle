@@ -1,0 +1,53 @@
+group 'io.github.maseev'
+version '1.0'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    orientDbVersion = '2.2.10'
+    springVersion = '4.3.3.RELEASE'
+    springSessionVersion = '1.2.2.RELEASE'
+}
+
+dependencies {
+    compileOnly "com.orientechnologies:orientdb-core:$orientDbVersion",
+            "com.orientechnologies:orientdb-client:$orientDbVersion",
+            "com.orientechnologies:orientdb-object:$orientDbVersion",
+            "org.springframework.session:spring-session:$springSessionVersion",
+            "org.springframework:spring-context:$springVersion",
+            "org.springframework:spring-web:$springVersion",
+            "javax.servlet:javax.servlet-api:3.1.0"
+
+    testCompile "junit:junit:4.12",
+            "com.orientechnologies:orientdb-core:$orientDbVersion",
+            "com.orientechnologies:orientdb-client:$orientDbVersion",
+            "com.orientechnologies:orientdb-object:$orientDbVersion",
+            "org.springframework:spring-test:$springVersion",
+            "org.springframework:spring-context:$springVersion",
+            "org.springframework:spring-context:$springVersion",
+            "org.springframework.session:spring-session:$springSessionVersion",
+            "org.springframework:spring-web:$springVersion"
+
+}
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3",
+                "net.saliman:gradle-cobertura-plugin:2.3.2"
+    }
+}
+
+apply plugin: "com.github.kt3k.coveralls"
+apply plugin: "net.saliman.cobertura"
