@@ -52,7 +52,7 @@ public class OrientHttpSession implements ExpiringSession {
   }
 
   @Override
-  public void setLastAccessedTime(long lastAccessedTime) {
+  public void setLastAccessedTime(final long lastAccessedTime) {
     this.lastAccessedTime = lastAccessedTime;
   }
 
@@ -67,7 +67,7 @@ public class OrientHttpSession implements ExpiringSession {
   }
 
   @Override
-  public void setMaxInactiveIntervalInSeconds(int interval) {
+  public void setMaxInactiveIntervalInSeconds(final int interval) {
     maxInactiveIntervalInSeconds = interval;
   }
 
@@ -88,7 +88,7 @@ public class OrientHttpSession implements ExpiringSession {
   }
 
   @Override
-  public Object getAttribute(String attributeName) {
+  public Object getAttribute(final String attributeName) {
     return attributes.get(attributeName);
   }
 
@@ -98,7 +98,7 @@ public class OrientHttpSession implements ExpiringSession {
   }
 
   @Override
-  public void setAttribute(String attributeName, Object attributeValue) {
+  public void setAttribute(final String attributeName, final Object attributeValue) {
     if (attributeValue == null) {
       removeAttribute(attributeName);
     } else {
@@ -107,7 +107,7 @@ public class OrientHttpSession implements ExpiringSession {
   }
 
   @Override
-  public void removeAttribute(String attributeName) {
+  public void removeAttribute(final String attributeName) {
     attributes.remove(attributeName);
   }
 }

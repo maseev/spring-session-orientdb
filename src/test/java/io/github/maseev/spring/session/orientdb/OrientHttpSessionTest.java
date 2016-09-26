@@ -58,4 +58,14 @@ public class OrientHttpSessionTest {
 
     assertThat(session.getAttribute(key), is(equalTo(null)));
   }
+
+  @Test
+  public void afterSettingNegativeValueForMaxInactiveIntervalSessionMustBecomeValidAllTheTime() {
+    final OrientHttpSession session = new OrientHttpSession(1);
+
+    session.setMaxInactiveIntervalInSeconds(-1);
+    session.setLastAccessedTime(System.currentTimeMillis() - TimeUnit.SECONDS.toMillis(10));
+
+    assertThat(session.isExpired(), is(equalTo(false)));
+  }
 }

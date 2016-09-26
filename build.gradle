@@ -22,7 +22,7 @@ dependencies {
             "com.orientechnologies:orientdb-object:$orientDbVersion",
             "org.springframework.session:spring-session:$springSessionVersion",
             "org.springframework:spring-context:$springVersion",
-            "org.springframework:spring-web:$springVersion",
+            "org.springframework:spring-webmvc:$springVersion",
             "javax.servlet:javax.servlet-api:3.1.0"
 
     testCompile "junit:junit:4.12",
@@ -33,7 +33,8 @@ dependencies {
             "org.springframework:spring-context:$springVersion",
             "org.springframework:spring-context:$springVersion",
             "org.springframework.session:spring-session:$springSessionVersion",
-            "org.springframework:spring-web:$springVersion"
+            "org.springframework:spring-webmvc:$springVersion",
+            "javax.servlet:javax.servlet-api:3.1.0"
 
     testRuntime "org.slf4j:slf4j-log4j12:1.7.5"
     testRuntime "log4j:log4j:1.2.7"

@@ -11,22 +11,23 @@ extension which uses [OrientDB](https://github.com/orientechnologies/orientdb) a
 storage.
 
 How to build
-------------
-* Just run ``` gradle clean install ``` to build the project and install it to the local
+-----------
+* Just run ``` ./gradlew clean install ``` to build the project and install it to the local
  Maven repository
 
 How to use
----
+---------
 
-Make sure that your project meets the following dependencies:
+Make sure that your project meets the following dependencies (use the recommended versions or 
+above):
 
-* [orientdb-core:2.2.10](https://mvnrepository.com/artifact/com.orientechnologies/orientdb-core/2.2.10) or above
-* [orientdb-client:2.2.10](https://mvnrepository.com/artifact/com.orientechnologies/orientdb-client/2.2.10) or above
-* [orientdb-object:2.2.10](https://mvnrepository.com/artifact/com.orientechnologies/orientdb-object/2.2.10) or above
-* [spring-session:1.2.2.RELEASE](https://mvnrepository.com/artifact/org.springframework.session/spring-session/1.2.2.RELEASE) or above
-* [spring-context:4.3.3.RELEASE](https://mvnrepository.com/artifact/org.springframework/spring-context/4.3.3.RELEASE) or above
-* [spring-web:4.3.3.RELEASE](https://mvnrepository.com/artifact/org.springframework/spring-web/4.3.3.RELEASE) or above
-* [javax.servlet-api:3.1.0](https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api/3.1.0) or above
+* [orientdb-core:2.2.10](https://mvnrepository.com/artifact/com.orientechnologies/orientdb-core/2.2.10)
+* [orientdb-client:2.2.10](https://mvnrepository.com/artifact/com.orientechnologies/orientdb-client/2.2.10)
+* [orientdb-object:2.2.10](https://mvnrepository.com/artifact/com.orientechnologies/orientdb-object/2.2.10)
+* [spring-session:1.2.2.RELEASE](https://mvnrepository.com/artifact/org.springframework.session/spring-session/1.2.2.RELEASE)
+* [spring-context:4.3.3.RELEASE](https://mvnrepository.com/artifact/org.springframework/spring-context/4.3.3.RELEASE)
+* [spring-webmvc:4.3.3.RELEASE](https://mvnrepository.com/artifact/org.springframework/spring-webmvc/4.3.3.RELEASE)
+* [javax.servlet-api:3.1.0](https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api/3.1.0)
 
 Add `spring-session-orientdb` as a dependency:
 
@@ -65,3 +66,7 @@ And don't forget to add the following properties:
 - **session.db.password** - password
 - **session.timeout** - the maximum inactive interval in seconds between requests before a session 
 will be invalidated. A negative time indicates that the session will never timeout.
+
+How to contribute
+---------------
+Found a bug or have an idea how to improve this project? Don't hesitate to open a new issue in the issue tracker or send a PR. I :heart: PRs.

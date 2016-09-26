@@ -4,30 +4,40 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+import com.orientechnologies.orient.core.db.OPartitionedDatabasePool;
+import com.orientechnologies.orient.core.sql.OCommandSQL;
 import com.orientechnologies.orient.object.db.OObjectDatabaseTx;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.session.SessionRepository;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.concurrent.TimeUnit;
 
+import io.github.maseev.spring.session.orientdb.integration.TestConfiguration;
+
+@RunWith(SpringRunner.class)
+@ContextConfiguration(classes = TestConfiguration.class)
 public class OrientHttpSessionRepositoryTest {
 
-  private OrientHttpSessionRepository repository;
+  @Autowired
+  private SessionRepository<OrientHttpSession> repository;
 
-  private OObjectDatabaseTx db;
-
-  @Before
-  public void before() {
-    new OObjectDatabaseTx("memory:tmpdb").create().close();
-    db = new OObjectDatabaseTx("memory:tmpdb").open("admin", "admin");
-    repository = new OrientHttpSessionRepository(db, 60);
-  }
+  @Autowired
+  private OPartitionedDatabasePool pool;
 
   @After
   public void after() {
-    db.drop();
+    final String DELETE_ALL_SESSIONS_QUERY =
+      "DELETE FROM " + OrientHttpSession.class.getSimpleName();
+
+    try (final OObjectDatabaseTx db = new OObjectDatabaseTx(pool.acquire())) {
+      db.command(new OCommandSQL(DELETE_ALL_SESSIONS_QUERY)).execute();
+    }
   }
 
   @Test
@@ -67,7 +77,7 @@ public class OrientHttpSessionRepositoryTest {
 
     session.setLastAccessedTime(session.getLastAccessedTime() - TimeUnit.MINUTES.toMillis(1));
     repository.save(session);
-    repository.flushExpiredSessions();
+    ((OrientHttpSessionRepository)repository).flushExpiredSessions();
 
     assertThat(repository.getSession(session.getId()), is(equalTo(null)));
   }
