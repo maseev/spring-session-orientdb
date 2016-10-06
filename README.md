@@ -12,8 +12,9 @@ storage.
 
 How to build
 -----------
-* Just run ``` ./gradlew clean install ``` to build the project and install it to the local
- Maven repository
+* Clone this repository
+* Run ``` ./gradlew clean install ``` in the project folder to build the project and install it to the local
+Maven repository
 
 How to use
 ---------
@@ -45,18 +46,23 @@ Add `spring-session-orientdb` as a dependency:
 compile group: 'io.github.maseev', name: 'spring-session-orientdb', version: '1.0'
 ```
 
-Add `@EnableOrientHttpSession` annotation to your Spring configuration class:
+Add `@EnableOrientHttpSession` annotation to your Spring Boot application class:
 
 ```java
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import io.github.maseev.spring.session.orientdb.EnableOrientHttpSession;
 
-@Configuration
 @EnableOrientHttpSession
-public class MyConfiguration {
-  
-  // Your spring beans configuration goes here
+@SpringBootApplication
+public class Application {
+
+  public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+  }
 }
+
 ```
 
 And don't forget to add the following properties:
@@ -66,6 +72,10 @@ And don't forget to add the following properties:
 - **session.db.password** - password
 - **session.timeout** - the maximum inactive interval in seconds between requests before a session 
 will be invalidated. A negative time indicates that the session will never timeout.
+
+That's it! When you run your application, OrientHttpSession class will be automatically
+registered (along with the necessary database indexes) in your OrientDB database. 
+That's the place where HTTP sessions will be stored.
 
 How to contribute
 ---------------
