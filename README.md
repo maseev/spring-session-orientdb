@@ -67,11 +67,11 @@ public class Application {
 
 And don't forget to add the following properties:
 
-- **session.db.url** - JDBC URL to the OrientDB database
-- **session.db.username** - username
-- **session.db.password** - password
+- **session.db.url** - JDBC URL to the OrientDB database (e.g. `session.db.url=remote:localhost:2424/test`)
+- **session.db.username** - username (e.g. `session.db.username=root`)
+- **session.db.password** - password (e.g. `session.db.password=root`)
 - **session.timeout** - the maximum inactive interval in seconds between requests before a session 
-will be invalidated. A negative time indicates that the session will never timeout.
+will be invalidated. A negative time indicates that the session will never timeout. (e.g. `session.timeout=60`)
 
 That's it! When you run your application, OrientHttpSession class will be automatically
 registered (along with the necessary database indexes) in your OrientDB database. 
