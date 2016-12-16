@@ -4,6 +4,7 @@ import com.orientechnologies.orient.core.id.ORID;
 
 import org.springframework.session.ExpiringSession;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -102,7 +103,13 @@ public class OrientHttpSession implements ExpiringSession {
     if (attributeValue == null) {
       removeAttribute(attributeName);
     } else {
-      attributes.put(attributeName, attributeValue);
+      if (attributeValue instanceof Serializable) {
+        attributes.put(attributeName, attributeValue);
+      } else {
+        final String msg = "%s must implement %s in order to be saved to the database";
+        throw new IllegalArgumentException(
+          String.format(msg, attributeValue.getClass(), Serializable.class));
+      }
     }
   }
 

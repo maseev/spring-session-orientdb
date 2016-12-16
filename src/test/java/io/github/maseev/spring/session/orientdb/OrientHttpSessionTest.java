@@ -68,4 +68,14 @@ public class OrientHttpSessionTest {
 
     assertThat(session.isExpired(), is(equalTo(false)));
   }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void settingNonSerializableAttributeMustThrowAnException() {
+    class NonSerializable {
+    }
+
+    final OrientHttpSession session = new OrientHttpSession(1);
+
+    session.setAttribute("nonSerializable", new NonSerializable());
+  }
 }
