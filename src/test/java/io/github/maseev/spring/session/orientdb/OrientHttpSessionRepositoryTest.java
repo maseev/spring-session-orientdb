@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.concurrent.TimeUnit;
 
+import io.github.maseev.spring.session.orientdb.entity.Person;
 import io.github.maseev.spring.session.orientdb.integration.TestConfiguration;
 
 @RunWith(SpringRunner.class)
@@ -80,5 +81,19 @@ public class OrientHttpSessionRepositoryTest {
     ((OrientHttpSessionRepository)repository).flushExpiredSessions();
 
     assertThat(repository.getSession(session.getId()), is(equalTo(null)));
+  }
+
+  @Test
+  public void savingASerializableEntityShouldPass() {
+    final Person person = new Person("John Doe", 26);
+    final OrientHttpSession session = repository.createSession();
+
+    session.setAttribute("person", person);
+
+    repository.save(session);
+
+    final OrientHttpSession savedSession = repository.getSession(session.getId());
+
+    assertThat(savedSession.getAttribute("person"), is(equalTo(person)));
   }
 }

@@ -90,12 +90,14 @@ public class OrientHttpSessionRepository implements SessionRepository<OrientHttp
     }
 
     session.setLastAccessedTime(System.currentTimeMillis());
+    session.deserializeAttributes();
 
     return session;
   }
 
   @Override
   public void save(final OrientHttpSession session) {
+    session.serializeAttributes();
     try (final OObjectDatabaseTx db = new OObjectDatabaseTx(pool.acquire())) {
       db.save(session);
     }

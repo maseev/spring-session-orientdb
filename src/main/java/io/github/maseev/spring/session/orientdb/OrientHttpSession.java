@@ -4,6 +4,11 @@ import com.orientechnologies.orient.core.id.ORID;
 
 import org.springframework.session.ExpiringSession;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +17,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 public class OrientHttpSession implements ExpiringSession {
 
@@ -22,12 +28,12 @@ public class OrientHttpSession implements ExpiringSession {
   public static final String MAX_INACTIVE_INTERVAL_IN_SECONDS_PROPERTY =
     "maxInactiveIntervalInSeconds";
 
+  private static final byte[] ZERO_LENGTH_ARRAY = new byte[0];
+
   @Id
   private ORID orid;
 
   private String sessionId;
-
-  private Map<String, Object> attributes;
 
   private long creationTime;
 
@@ -35,14 +41,20 @@ public class OrientHttpSession implements ExpiringSession {
 
   private int maxInactiveIntervalInSeconds;
 
+  private byte[] serializedAttributes;
+
+  @Transient
+  private Map<String, Serializable> attributes;
+
   public OrientHttpSession() {
+    serializedAttributes = ZERO_LENGTH_ARRAY;
     attributes = new HashMap<>();
   }
 
   public OrientHttpSession(final int maxInactiveIntervalInSeconds) {
+    this();
     this.maxInactiveIntervalInSeconds = maxInactiveIntervalInSeconds;
     sessionId = UUID.randomUUID().toString();
-    attributes = new HashMap<>();
     creationTime = System.currentTimeMillis();
     lastAccessedTime = creationTime;
   }
@@ -104,7 +116,7 @@ public class OrientHttpSession implements ExpiringSession {
       removeAttribute(attributeName);
     } else {
       if (attributeValue instanceof Serializable) {
-        attributes.put(attributeName, attributeValue);
+        attributes.put(attributeName, (Serializable) attributeValue);
       } else {
         final String msg = "%s must implement %s in order to be saved to the database";
         throw new IllegalArgumentException(
@@ -116,5 +128,32 @@ public class OrientHttpSession implements ExpiringSession {
   @Override
   public void removeAttribute(final String attributeName) {
     attributes.remove(attributeName);
+  }
+
+  void serializeAttributes() {
+    if (attributes.isEmpty()) {
+      return;
+    }
+
+    try (final ByteArrayOutputStream bos = new ByteArrayOutputStream();
+         final ObjectOutputStream oos = new ObjectOutputStream(bos)) {
+      oos.writeObject(attributes);
+      serializedAttributes = bos.toByteArray();
+    } catch (IOException e) {
+      throw new IllegalArgumentException(e);
+    }
+  }
+
+  void deserializeAttributes() {
+    if (serializedAttributes.length == 0) {
+      return;
+    }
+
+    try (final ByteArrayInputStream bis = new ByteArrayInputStream(serializedAttributes);
+         final ObjectInputStream ois = new ObjectInputStream(bis)) {
+      attributes = (Map<String, Serializable>) ois.readObject();
+    } catch (IOException | ClassNotFoundException e) {
+      throw new IllegalArgumentException(e);
+    }
   }
 }
