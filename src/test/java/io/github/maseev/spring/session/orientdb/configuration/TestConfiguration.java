@@ -1,4 +1,4 @@
-package io.github.maseev.spring.session.orientdb.integration;
+package io.github.maseev.spring.session.orientdb.configuration;
 
 import com.orientechnologies.orient.core.db.OPartitionedDatabasePool;
 import com.orientechnologies.orient.core.exception.OStorageExistsException;

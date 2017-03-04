@@ -6,19 +6,12 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.session.SessionRepository;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.concurrent.TimeUnit;
 
-import io.github.maseev.spring.session.orientdb.integration.TestConfiguration;
-
-@RunWith(SpringRunner.class)
-@ContextConfiguration(classes = TestConfiguration.class)
-public class OrientHttpSessionTest {
+public class OrientHttpSessionTest extends OrientDbTest {
 
   @Autowired
   private SessionRepository<OrientHttpSession> repository;

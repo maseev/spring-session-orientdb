@@ -101,6 +101,7 @@ public class OrientHttpSession implements ExpiringSession {
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public Object getAttribute(final String attributeName) {
     return attributes.get(attributeName);
   }
@@ -144,6 +145,7 @@ public class OrientHttpSession implements ExpiringSession {
     }
   }
 
+  @SuppressWarnings("unchecked")
   void deserializeAttributes() {
     if (serializedAttributes.length == 0) {
       return;
