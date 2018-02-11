@@ -76,7 +76,3 @@ will be invalidated. A negative time indicates that the session will never timeo
 That's it! When you run your application, OrientHttpSession class will be automatically
 registered (along with the necessary database indexes) in your OrientDB database. 
 That's the place where HTTP sessions will be stored.
-
-How to contribute
----------------
-Found a bug or have an idea how to improve this project? Don't hesitate to open a new issue in the issue tracker or send a PR. I :heart: PRs.
