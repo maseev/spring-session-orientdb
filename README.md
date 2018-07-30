@@ -18,20 +18,6 @@ Maven repository
 
 How to use
 ---------
-
-Make sure that your project meets the following dependencies (use the recommended versions or 
-above):
-
-* [orientdb-core:2.2.10](https://mvnrepository.com/artifact/com.orientechnologies/orientdb-core/2.2.10)
-* [orientdb-client:2.2.10](https://mvnrepository.com/artifact/com.orientechnologies/orientdb-client/2.2.10)
-* [orientdb-object:2.2.10](https://mvnrepository.com/artifact/com.orientechnologies/orientdb-object/2.2.10)
-* [spring-session:1.2.2.RELEASE](https://mvnrepository.com/artifact/org.springframework.session/spring-session/1.2.2.RELEASE)
-* [spring-context:4.3.3.RELEASE](https://mvnrepository.com/artifact/org.springframework/spring-context/4.3.3.RELEASE)
-* [spring-webmvc:4.3.3.RELEASE](https://mvnrepository.com/artifact/org.springframework/spring-webmvc/4.3.3.RELEASE)
-* [javax.servlet-api:3.1.0](https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api/3.1.0)
-
-Add `spring-session-orientdb` as a dependency:
-
 ##### Maven
 ```xml
 <dependency>
@@ -65,14 +51,10 @@ public class Application {
 
 ```
 
-And don't forget to add the following properties:
+Don't forget to specify the following properties:
 
 - **session.db.url** - JDBC URL to the OrientDB database (e.g. `session.db.url=remote:localhost:2424/test`)
 - **session.db.username** - username (e.g. `session.db.username=root`)
 - **session.db.password** - password (e.g. `session.db.password=root`)
 - **session.timeout** - the maximum inactive interval in seconds between requests before a session 
 will be invalidated. A negative time indicates that the session will never timeout. (e.g. `session.timeout=60`)
-
-That's it! When you run your application, OrientHttpSession class will be automatically
-registered (along with the necessary database indexes) in your OrientDB database. 
-That's the place where HTTP sessions will be stored.
