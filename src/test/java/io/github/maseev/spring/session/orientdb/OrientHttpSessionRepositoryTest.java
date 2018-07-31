@@ -49,7 +49,7 @@ public class OrientHttpSessionRepositoryTest extends OrientDbTest {
 
     session.setLastAccessedTime(session.getLastAccessedTime() - TimeUnit.MINUTES.toMillis(1));
     repository.save(session);
-    ((OrientHttpSessionRepository)repository).flushExpiredSessions();
+    sessionRemover.flushExpiredSessions();
 
     assertThat(repository.getSession(session.getId()), is(equalTo(null)));
   }

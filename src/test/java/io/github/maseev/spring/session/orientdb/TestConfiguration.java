@@ -1,16 +1,13 @@
-package io.github.maseev.spring.session.orientdb.configuration;
+package io.github.maseev.spring.session.orientdb;
 
 import com.orientechnologies.orient.core.db.OPartitionedDatabasePool;
 import com.orientechnologies.orient.core.exception.OStorageExistsException;
 import com.orientechnologies.orient.object.db.OObjectDatabaseTx;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-
-import io.github.maseev.spring.session.orientdb.EnableOrientHttpSession;
 
 @Configuration
 @EnableOrientHttpSession

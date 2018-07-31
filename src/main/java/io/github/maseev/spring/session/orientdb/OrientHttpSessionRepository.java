@@ -11,13 +11,9 @@ import com.orientechnologies.orient.core.metadata.schema.OClass;
 import com.orientechnologies.orient.core.sql.OCommandSQL;
 import com.orientechnologies.orient.core.sql.query.OSQLSynchQuery;
 import com.orientechnologies.orient.object.db.OObjectDatabaseTx;
-
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.session.SessionRepository;
-
 import java.util.List;
-
 import javax.annotation.PreDestroy;
+import org.springframework.session.SessionRepository;
 
 public class OrientHttpSessionRepository implements SessionRepository<OrientHttpSession> {
 
@@ -110,11 +106,7 @@ public class OrientHttpSessionRepository implements SessionRepository<OrientHttp
     }
   }
 
-  /**
-   * Flushes expired sessions every minute
-   */
-  @Scheduled(fixedRate = 60000)
-  public void flushExpiredSessions() {
+  void deleteExpiredSessions() {
     try (final OObjectDatabaseTx db = new OObjectDatabaseTx(pool.acquire())) {
       db.command(DELETE_EXPIRED_SESSIONS_QUERY).execute();
     }
